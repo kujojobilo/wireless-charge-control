@@ -37,7 +37,7 @@ void delay(int delayTime);//延时函数
 static bool isDone = 0;//工作完成标志位
 static float distance = 0;//待移动距离
 static bool direction = 0;//进给方向，false复位，true前进
-static float disPerPulse = 12/10000;//单圈进给距离/每圈对应脉冲数
+static float disPerPulse = 12/10000;//单圈进给距离/每圈对应脉冲数  (进给距离待测定）
 static int num = 0;//转动圈数
 
 /* Private functions ---------------------------------------------------------*/
@@ -106,7 +106,7 @@ void enableOutput(){
 
 
 void messageInput(){
-  isDone = GPIO_ReadInputPin(GPIOC,GPIO_PIN_5); ;//TODO:添加其他输入的判别
+  isDone = GPIO_ReadInputPin(GPIOC,GPIO_PIN_5); ;//TODO:其他每一位输入的作用尚不明白，未添加
 }
 
 void delay(int delayTime){
