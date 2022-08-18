@@ -12,6 +12,7 @@
 #include "stm8s.h"
 #include "stm8s_uart1.h"
 #include "stm8s_tim4.h"
+#include "stm8s_tim1.h"
 
 
 
@@ -22,6 +23,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 
+void watchDog();//配置看门狗CLK输出
 void wakeInit();//配置唤醒方式
 void init();//初始化
 void blueToothInit();//蓝牙模块(即UART1）初始化
@@ -41,6 +43,17 @@ static float disPerPulse = 12/10000;//单圈进给距离/每圈对应脉冲数  (进给距离待测
 static int num = 0;//转动圈数
 
 /* Private functions ---------------------------------------------------------*/
+
+void watchDog(){//配置pc1（TIM1-CH1）引脚输出，为看门狗提供周期信号
+   GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_SLOW);
+   TIM1_DeInit();
+   TIM1_TimeBaseInit(0x0100,TIM1_COUNTERMODE_UP,20,0x00);
+   TIM1_OC1Init(TIM1_OCMODE_PWM1,TIM1_OUTPUTSTATE_ENABLE,TIM1_OUTPUTNSTATE_DISABLE,0xFF00,
+                TIM1_OCPOLARITY_HIGH,TIM1_OCNPOLARITY_HIGH,
+               TIM1_OCIDLESTATE_SET, TIM1_OCNIDLESTATE_SET);
+   TIM1_Cmd(ENABLE);
+   TIM1_CtrlPWMOutputs(ENABLE);
+}
 
 void wakeInit(){
   GPIO_Init(GPIOA,GPIO_PIN_4,GPIO_MODE_IN_PU_IT);//配置PA4(UART1_RX)为外部唤醒引脚，传输的第一份数据用于唤醒
@@ -70,6 +83,7 @@ void CLKInit(){
 
 void GPIOInit(){
   GPIO_Init(GPIOB,GPIO_PIN_LNIB|GPIO_PIN_4|GPIO_PIN_5,GPIO_MODE_OUT_PP_LOW_SLOW);//PB0-5推挽低速输出
+  GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_SLOW);//PC1推挽低速输出,用于喂看门狗
   GPIO_Init(GPIOC,GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6,GPIO_MODE_IN_PU_NO_IT);//PC2356上拉禁中断输入
 }
 
