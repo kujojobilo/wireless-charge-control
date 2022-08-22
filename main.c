@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    Project/main.c 
   * @author  王田
-  * @date    2022/08/17
+  * @date    2022/08/22
   * @brief   Main program body
   ******************************************************************************
   */ 
@@ -44,15 +44,27 @@ static int num = 0;//转动圈数
 
 /* Private functions ---------------------------------------------------------*/
 
-void watchDog(){//配置pc1（TIM1-CH1）引脚输出，为看门狗提供周期信号
+void watchDog(){//配置pc1引脚输出，为看门狗提供周期信号。
+  /*
+     具体工作方式为 开机---向看门狗输出高电平---待机（每140ms被看门狗重置）
+                         ---待机期间或开机初始化后外部蓝牙产生中断--电机控制工作(期间保持对看门狗高电平）--结束工作--待机
+  */
+                                                                                         
    GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_SLOW);
+   GPIO_WriteHigh(GPIOC,GPIO_PIN_1);//输出单个短脉冲
+   delay(1);
+   GPIO_WriteLow(GPIOC,GPIO_PIN_1);
+   
+/*   
+   原计划以pwm形式维持输出，后发现没有必要且不符合工况
    TIM1_DeInit();
-   TIM1_TimeBaseInit(0x0100,TIM1_COUNTERMODE_UP,20,0x00);
+   TIM1_TimeBaseInit(16,TIM1_COUNTERMODE_UP,20,0x00);
    TIM1_OC1Init(TIM1_OCMODE_PWM1,TIM1_OUTPUTSTATE_ENABLE,TIM1_OUTPUTNSTATE_DISABLE,0xFF00,
                 TIM1_OCPOLARITY_HIGH,TIM1_OCNPOLARITY_HIGH,
                TIM1_OCIDLESTATE_SET, TIM1_OCNIDLESTATE_SET);
    TIM1_Cmd(ENABLE);
    TIM1_CtrlPWMOutputs(ENABLE);
+*/
 }
 
 void wakeInit(){
@@ -134,6 +146,7 @@ void delay(int delayTime){
 
 void main()
 {
+  watchdog();
   wakeInit();
   asm("RIM");
   delay(10);
@@ -143,11 +156,14 @@ void main()
 
 #pragma vector = 0x05//A端口外部唤醒中断
 __interrupt void EXTI_PORTA_IRQHandler(){
+  watchdog();
   init();
   delay(10);
+  watchdog();
   recieveData();
   motorControl();
   delay(10);
+  watchdog();
   asm("HALT");
 }
 
