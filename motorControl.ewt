@@ -2176,6 +2176,9 @@
         </file>
     </group>
     <file>
+        <name>$PROJ_DIR$\bluetoothDebug.c</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\main.c</name>
     </file>
     <file>

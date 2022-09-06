@@ -31,7 +31,10 @@
         <ShowTimeSum>1</ShowTimeSum>
     </DataLog>
     <Breakpoints2>
-        <Count>0</Count>
+        <Bp0>_ 1 "STD_CODE2" "{$PROJ_DIR$\main.c}.97.1" 0 0 1 "" 0 ""</Bp0>
+        <Bp1>_ 1 "STD_CODE2" "{$PROJ_DIR$\main.c}.41.1" 0 0 1 "" 0 ""</Bp1>
+        <Bp2>_ 1 "STD_CODE2" "{$PROJ_DIR$\main.c}.39.1" 0 0 1 "" 0 ""</Bp2>
+        <Count>3</Count>
     </Breakpoints2>
     <Interrupts>
         <Enabled>1</Enabled>

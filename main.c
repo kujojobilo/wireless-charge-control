@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    Project/main.c 
   * @author  王田
-  * @date    2022/08/22
+  * @date    2022/09/06
   * @brief   Main program body
   ******************************************************************************
   */ 
@@ -75,7 +75,6 @@ void wakeInit(){
 
 void init(){
   blueToothInit();
-  CLKInit();
   GPIOInit();
 }
 
@@ -95,7 +94,6 @@ void CLKInit(){
 
 void GPIOInit(){
   GPIO_Init(GPIOB,GPIO_PIN_LNIB|GPIO_PIN_4|GPIO_PIN_5,GPIO_MODE_OUT_PP_LOW_SLOW);//PB0-5推挽低速输出
-  GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_SLOW);//PC1推挽低速输出,用于喂看门狗
   GPIO_Init(GPIOC,GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6,GPIO_MODE_IN_PU_NO_IT);//PC2356上拉禁中断输入
 }
 
@@ -132,7 +130,11 @@ void enableOutput(){
 
 
 void messageInput(){
-  isDone = GPIO_ReadInputPin(GPIOC,GPIO_PIN_5); ;//TODO:其他每一位输入的作用尚不明白，未添加
+  //PC6532分别功能为：Z信号输出、报警输出、定位完成输出、电磁制动器输出
+  bool Zout = GPIO_ReadInputPin(GPIOC,GPIO_PIN_6);
+  bool alert = GPIO_ReadInputPin(GPIOC,GPIO_PIN_5);
+  isDone = GPIO_ReadInputPin(GPIOC,GPIO_PIN_3); //TODO:其他每一位输入的作用尚不明白，未添加相关使用范围
+  bool isbreak = GPIO_ReadInputPin(GPIOC,GPIO_PIN_2);
 }
 
 void delay(int delayTime){
@@ -146,6 +148,7 @@ void delay(int delayTime){
 
 void main()
 {
+  CLKInit();
   watchdog();
   wakeInit();
   asm("RIM");
