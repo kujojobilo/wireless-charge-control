@@ -1,6 +1,4 @@
 ﻿D:\File\IRAProject\无线充电平台控制\Debug\Obj\motorControl.pbd
-D:\File\IRAProject\无线充电平台控制\Debug\Obj\bluetoothDebug.pbi
-D:\File\IRAProject\无线充电平台控制\Debug\Obj\main.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_adc1.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_adc2.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_awu.pbi
@@ -11,7 +9,6 @@ D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_exti.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_flash.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_gpio.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_i2c.pbi
-D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_it.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_itc.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_iwdg.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_rst.pbi
@@ -27,3 +24,6 @@ D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_uart2.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_uart3.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_uart4.pbi
 D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_wwdg.pbi
+D:\File\IRAProject\无线充电平台控制\Debug\Obj\bluetoothDebug.pbi
+D:\File\IRAProject\无线充电平台控制\Debug\Obj\main.pbi
+D:\File\IRAProject\无线充电平台控制\Debug\Obj\stm8s_it.pbi
